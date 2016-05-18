@@ -228,21 +228,22 @@ var funcArray = [];
 
 function indexReturn() {
 
-  var counter = 0;
+  var counter = -1;
 
   return function () {
-
-    return counter;
     counter++;
+    return counter;
+
 
 }
 }
 
+var thing = indexReturn();
 
 for (var i = 0; i < 6; i++) {
 
 
-  funcArray.push(indexReturn);
+  funcArray.push(thing);
 
 }
 
