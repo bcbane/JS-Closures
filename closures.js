@@ -13,10 +13,14 @@ var outer = function(){
 
 // Code Here
 
+var inner = outer;
+
 
 //Once you do that, invoke inner.
 
   //Code Here
+
+  inner();
 
 
 
@@ -37,6 +41,11 @@ var callFriend = function(){
 
   //Code Here
 
+function makeCall() {
+
+  console.log(callF("435-215-9248"));
+
+};
 
 
 
@@ -52,13 +61,25 @@ var callFriend = function(){
 */
 
 //Code Here
+function makeCounter() {
+
+  var counter = 0;
+
+  return function () {
+
+    counter++;
+    // console.log(counter);
+    return counter;
+  }
+
+};
 
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -74,11 +95,20 @@ var callFriend = function(){
 function counterFactory(value) {
 
   // Code here.
+  return{
+      inc: function() {
+        value = value + 1;
+        return value;
+      },
+      dec: function() {
 
+        value = value - 1;
+        return value;
 
-  return {
+      }
+
   }
-}
+};
 
 
 counter = counterFactory(10);
@@ -96,11 +126,16 @@ counter = counterFactory(10);
     var welcomeText = 'You\'re doing awesome, keep it up ';
 
     // code message function here.
+    function message() {
+
+      return welcomeText + firstname + " " + lastname + '.';
+
+    }
 
 
     //Uncommment this to return the value of your invoked message function
 
-    //return message()
+    return message()
   }
 
   motivation('Billy', 'Bob'); // 'Your doing awesome keep it up Billy Bob
@@ -126,13 +161,13 @@ counter = counterFactory(10);
     // Anything that is being returned is made public and can be invoked from outside our lexical scope
 
     return {
-      // Code here.
+      publicMethod: privateMethod
     };
 
   })();
 
 //Uncomment this after you create your public method
-//   module.publicMethod();
+  module.publicMethod();
 
 
 
@@ -141,17 +176,45 @@ counter = counterFactory(10);
 // So that it logs ( 0 then 1 then 2 then 3, etc). Run this code in your console to see what the output is.
 
 
+// function timeOutCounter() {
+//   for (var i = 0; i <= 5; i++) {
+//     setTimeout( function(i) {
+//
+//       return function(){
+//
+//         newScope(i);
+//
+//       }
+//
+//     }(i), i * 1000)
+//   }
+//
+//   function newScope(i) {
+//     console.log(i)
+//   }
+// }
+
 function timeOutCounter() {
+
+  var timePrint = function(i) {
+
+    return function(){
+
+    newScope(i);
+
+    }
+
+  };
+
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000)
+    setTimeout(timePrint(i), i * 1000)
   }
 
   function newScope(i) {
     console.log(i)
   }
 }
+
 timeOutCounter();
   // To make this code work you will need to create a new scope for every iteration.
 
@@ -163,15 +226,35 @@ timeOutCounter();
 
 var funcArray = [];
 
-/*
-  Make the following code work
+function indexReturn() {
 
-  funcArray[0]() //0
-  funcArray[1]() //1
-  funcArray[2]() //2
-  funcArray[3]() //3
-  funcArray[4]() //4
-  funcArray[5]() //5
+  var counter = 0;
 
-  *Hint: Don't let this fool you. Break down what's really happening here.
-*/
+  return function () {
+
+    return counter;
+    counter++;
+
+}
+}
+
+
+for (var i = 0; i < 6; i++) {
+
+
+  funcArray.push(indexReturn);
+
+}
+
+
+  // Make the following code work
+
+  // funcArray[0]() //0
+  // funcArray[1]() //1
+  // funcArray[2]() //2
+  // funcArray[3]() //3
+  // funcArray[4]() //4
+  // funcArray[5]() //5
+
+//   *Hint: Don't let this fool you. Break down what's really happening here.
+// */
